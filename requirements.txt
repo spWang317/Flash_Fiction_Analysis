@@ -1,0 +1,15 @@
+numpy==2.4.0
+pandas==2.3.3
+scipy==1.16.3
+tqdm==4.67.1
+
+matplotlib==3.10.8
+seaborn==0.13.2
+scikit-learn==1.8.0
+kneed==0.8.5
+
+torch==2.9.1
+transformers==4.57.3
+konlpy==0.6.0
+kss==6.1.1
+sentence-transformers
