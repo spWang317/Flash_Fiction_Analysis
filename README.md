@@ -4,34 +4,18 @@ This project provides a computational framework to analyze the narrative structu
 
 ---
 
-## 1. Setup & Installation Guide
+## 1. Data Inventory & Policy
 
-This guide ensures consistent reproducibility across different research environments. Follow the steps below to configure your system.
+Before setting up the environment, please ensure you understand the data structure required for this research.
 
-### (1) System-Level Dependencies (Linux/Ubuntu)
-
-This project requires the **MeCab** morphological analyzer engine. Since MeCab is a system-level tool written in C++, it must be installed via the package manager before setting up the Python environment.
-
-```bash
-# Update package list and install MeCab system libraries
-sudo apt-get update
-sudo apt-get install -y libmecab-dev mecab-ko mecab-ko-dic
-```
-
----
-
-### (2) Data Source & Policy
-
-#### `short_novel_merged.csv` (Not Provided)
-This is the primary input file containing the narrative data. Due to **copyright restrictions** regarding the proprietary literary content, the full text dataset is **not publicly provided** in this repository.
-
-The schema for this file is as follows:
+### (1) Input Dataset: `short_novel_merged.csv` (Not Provided)
+Due to **copyright restrictions** regarding proprietary literary content, the full-text dataset is **not publicly provided**. To run the analysis, you must prepare your own CSV file with the following schema:
 
 | Column Name | Description |
 |:---|:---|
 | `isbn` | International Standard Book Number |
 | `story_title` | Title of the individual flash fiction story |
-| `text` | **Full narrative text** (Used for surprisal/coherence calculation) |
+| `text` | **Full narrative text** (Required for processing) |
 | `author` | Name of the author |
 | `birth_year` | Birth year of the author |
 | `gender` | Gender of the author |
@@ -40,74 +24,79 @@ The schema for this file is as follows:
 | `pub_year` | Year of publication |
 | `country` | Country of author |
 
-#### `book_list_summary.csv` (Provided)
-In place of the full text data, we provide a **bibliography summary** of the works included in this research. This file allows researchers to verify the metadata of the stories analyzed without violating copyright.
-
-
+### (2) Reference Data: `book_list_summary.csv` (Provided)
+We provide a **bibliographic summary** of the works analyzed in this study. This allows researchers to verify the metadata and scope of the research without violating copyright laws.
 
 ---
 
-### (3) Environment Setup (Conda)
+## 2. Setup & Installation
 
-You can set up the environment using either `environment.yaml` (recommended) or manual installation.
+Follow these steps to configure your system and Python environment.
 
-#### Option A: Using `environment.yaml`
+
+
+### (1) System-Level Dependencies (Linux/Ubuntu)
+The MeCab engine must be installed at the OS level first.
+
 ```bash
-# Create environment from yaml file
-conda env create -f environment.yaml
+# Install MeCab engine and Korean dictionaries
+sudo apt-get update
+sudo apt-get install -y libmecab-dev mecab-ko mecab-ko-dic
+```
 
-# Activate the environment
+### (2) Environment Setup (Conda)
+You can set up the environment using the provided `environment.yaml` or via manual installation.
+
+#### Option A: Using `environment.yaml` (Recommended)
+```bash
+conda env create -f environment.yaml
 conda activate narrative_analysis
 ```
 
-#### Option B: Manual Setup
+#### Option B: Manual Installation
 ```bash
-# Create and activate environment
 conda create -n narrative_analysis python=3.10 -y
 conda activate narrative_analysis
 
-# Install build tools first (Critical for KSS/MeCab-python3)
+# Build tools must be installed before other packages
 pip install setuptools wheel Cython
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
 ---
 
-### (4) Execution Order & Workflow
+## 3. Research Workflow & Execution
 
 
 
-To replicate the study, follow the pipeline in this specific order:
+To replicate the analysis, execute the scripts in the following order:
 
-1.  **Feature Extraction - Surprisal**:
+1.  **Surprisal Extraction**:
     `python calculate_surprisal.py`
-    *Outputs Negative Log-Likelihood (NLL) vectors using Solar-10.7B.*
+    *Calculates NLL (Negative Log-Likelihood) per sentence using Solar-10.7B.*
 
-2.  **Feature Extraction - Coherence & Semantic Shift**:
+2.  **Semantic Metrics Extraction**:
     `python coherence_topic_calc.py`
-    *Measures adjacent similarity and global context deviation using SBERT.*
+    *Measures local coherence and global semantic shift using SBERT.*
 
-3.  **Narrative Archetype Analysis**:
+3.  **Statistical Analysis & Visualization**:
     Open and run `MiniFiction_Analysis.ipynb`.
-    *Performs clustering, sensitivity analysis, and statistical validation (ANOVA/Kruskal-Wallis).*
+    *Performs clustering, sensitivity analysis, and generates research figures.*
 
 ---
 
-### (5) Analytical Features (`MiniFiction_Analysis.ipynb`)
+## 4. Analytical Features (`MiniFiction_Analysis.ipynb`)
 
-The analysis notebook transforms numerical vectors into research insights:
-
-* **Clustering**: Groups stories into latent narrative archetypes.
-* **Two-way Sensitivity Analysis**: Evaluates the stability of clusters against parameter variations.
-* **Statistical Validation**: Conducts significance testing across narrative categories.
-* **Visualization**: Generates heatmaps and plots saved in the `{project_root}/figures` directory.
+The final analysis stage transforms numerical vectors into narrative insights:
+* **Clustering**: Groups stories into latent narrative archetypes based on trajectories.
+* **Sensitivity Analysis**: Evaluates cluster stability across parameter variations.
+* **Significance Testing**: Conducts ANOVA/Kruskal-Wallis tests across categories.
+* **Visual Output**: Generates heatmaps and plots in the `{project_root}/figures` directory.
 
 ---
 
-### (6) Troubleshooting
+## 5. Troubleshooting
 
-* **Copyright Issues**: If you wish to test the code, ensure you prepare a CSV file (`short_novel_merged.csv`) matching the schema described in section (2).
-* **MeCab Errors**: Ensure you ran the `sudo apt-get` commands. MeCab must be installed at the OS level.
-* **KSS Installation**: If `pip install` fails for KSS, verify that `Cython` was installed successfully beforehand.
+* **Missing Data Error**: Ensure `short_novel_merged.csv` is placed in the project root before execution.
+* **KSS/MeCab Errors**: If KSS fails to install, ensure `Cython` was installed first. If MeCab isn't found, verify the `apt-get` installation in Section 2-(1).
+* **CUDA Mismatch**: Ensure your PyTorch version is compatible with your GPU driver.
