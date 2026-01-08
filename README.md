@@ -4,7 +4,19 @@ This project provides a computational framework to analyze the narrative structu
 
 ---
 
-## 1. Data Inventory & Policy
+## 1. Technical Specifications
+
+The following hardware and software environment was used for neural inference and statistical analysis to ensure high-performance computing (HPC) stability.
+
+* **OS**: Ubuntu 24.04.2 LTS
+* **CPU**: Intel(R) Xeon(R) Silver 4516Y+
+* **RAM**: 251 GiB
+* **GPU**: Dual NVIDIA RTX A6000 (48 GB VRAM each, **Total 96 GB VRAM**)
+* **Architecture**: Optimized for intensive transformer-based inference and large-scale corpus processing.
+
+---
+
+## 2. Data Inventory & Policy
 
 Before setting up the environment, please ensure you understand the data structure required for this research.
 
@@ -29,7 +41,7 @@ We provide a **bibliographic summary** of the works analyzed in this study. This
 
 ---
 
-## 2. Setup & Installation
+## 3. Setup & Installation
 
 Follow these steps to configure your system and Python environment.
 
@@ -65,7 +77,7 @@ pip install -r requirements.txt
 
 ---
 
-## 3. Research Workflow & Execution
+## 4. Research Workflow & Execution
 
 
 
@@ -85,18 +97,18 @@ To replicate the analysis, execute the scripts in the following order:
 
 ---
 
-## 4. Analytical Features (`MiniFiction_Analysis.ipynb`)
+## 5. Analytical Features (`MiniFiction_Analysis.ipynb`)
 
 The final analysis stage transforms numerical vectors into narrative insights:
 * **Clustering**: Groups stories into latent narrative archetypes based on trajectories.
-* **Sensitivity Analysis**: Evaluates cluster stability across parameter variations.
+* **Sensitivity Analysis**: Evaluates cluster stability across parameter variations (Two-way).
 * **Significance Testing**: Conducts ANOVA/Kruskal-Wallis tests across categories.
 * **Visual Output**: Generates heatmaps and plots in the `{project_root}/figures` directory.
 
 ---
 
-## 5. Troubleshooting
+## 6. Troubleshooting
 
 * **Missing Data Error**: Ensure `short_novel_merged.csv` is placed in the project root before execution.
-* **KSS/MeCab Errors**: If KSS fails to install, ensure `Cython` was installed first. If MeCab isn't found, verify the `apt-get` installation in Section 2-(1).
-* **CUDA Mismatch**: Ensure your PyTorch version is compatible with your GPU driver.
+* **KSS/MeCab Errors**: If KSS fails to install, ensure `Cython` was installed first. If MeCab isn't found, verify the `apt-get` installation in Section 3-(1).
+* **CUDA Mismatch**: Ensure your GPU drivers support CUDA 12.x (recommended for Ubuntu 24.04).
