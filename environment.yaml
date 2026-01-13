@@ -1,22 +1,31 @@
-name: novel_full_analysis
+name: flashfiction_analysis
 channels:
   - pytorch
+  - nvidia
   - conda-forge
   - defaults
 dependencies:
   - python=3.10
   - pip
-  - numpy=2.4.0
-  - pandas=2.3.3
-  - matplotlib=3.10.8
-  - scipy=1.16.3
-  - seaborn=0.13.2
-  - tqdm=4.67.1
-  - scikit-learn=1.8.0
   - pip:
-    - torch==2.9.1
-    - transformers==4.57.3
-    - kneed==0.8.5
-    - konlpy==0.6.0
-    - kss==6.1.1
-    - sentence-transformers
+      - pandas==2.2.2
+      - numpy==1.26.4
+      - matplotlib==3.9.4
+      - seaborn==0.13.2
+      - scipy==1.11.4
+      - statsmodels==0.14.6
+      - scikit-learn==1.6.1
+      - plotly==6.1.1
+      - tqdm==4.67.1
+      - kneed==0.8.5
+      - torch>=2.4.0
+      - transformers>=4.45.0
+      - accelerate>=1.1.0
+      - kss==6.0.6
+      - konlpy==0.6.0
+      - sentence-transformers
+      - ipykernel
+      - notebook
+      - openpyxl
+      # Note: 'bitsandbytes' is required for Server (Linux/CUDA) only.
+      # For local analysis on Mac/Windows, please comment out or exclude it.
