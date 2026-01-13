@@ -33,7 +33,7 @@ The narrative trajectories are generated through the following three-stage scrip
 * **Process:** * Sentence segmentation using `KSS` and `Mecab`.
     * Statistical analysis of sentence, character, and token counts.
     * **Outlier Removal:** Stories in the bottom 5% and top 5% of the sentence count distribution are excluded to ensure corpus homogeneity.
-* **Output:** `short_novel_merged_filtered.csv`
+* **Output:** `short_novel_merged_filtered.csv` , `length_analysis.zip`
 
 ### **[Step 2] Surprisal Extraction: `calculate_surprisal.py`**
 * **Input:** `short_novel_merged_filtered.csv`
