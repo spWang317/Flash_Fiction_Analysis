@@ -148,7 +148,7 @@ The narrative trajectories are generated through a three-stage sequence:
 
 ## 🧪 Final Analysis
 
-The master output is utilized in **`MiniFiction_Analysis.ipynb`**. This notebook performs:
+The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This notebook performs:
 1. **Stability Diagnostics**: Detection and removal of initial 'burn-in' noise.
 2. **Trajectory Clustering**: Identification of narrative archetypes and structural patterns.
 3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
