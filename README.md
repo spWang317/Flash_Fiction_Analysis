@@ -1,114 +1,62 @@
-# Korean Flash Fiction Narrative Analysis
+# 📚 Computational Analysis of Korean Flash Fiction: Data Pipeline
 
-This project provides a computational framework to analyze the narrative structures of Korean short stories (flash fiction). It utilizes Large Language Models (LLMs) to calculate **Surprisal**, and Sentence-BERT (SBERT) to measure **Local Coherence** and **Global Semantic Shift**.
-
----
-
-## 1. Technical Specifications
-
-The following hardware and software environment was used for neural inference and statistical analysis to ensure high-performance computing (HPC) stability.
-
-* **OS**: Ubuntu 24.04.2 LTS
-* **CPU**: Intel(R) Xeon(R) Silver 4516Y+
-* **RAM**: 251 GiB
-* **GPU**: Dual NVIDIA RTX A6000 (48 GB VRAM each, **Total 96 GB VRAM**)
-* **Architecture**: Optimized for intensive transformer-based inference and large-scale corpus processing.
+This research investigates the narrative dynamics of Korean flash fiction through computational methods. The pipeline is designed to transform raw narrative texts into multi-dimensional signal trajectories (Surprisal, Coherence, and Semantic Shift) for structural analysis.
 
 ---
 
-## 2. Data Inventory & Policy
+## 📂 Data Inventory
 
-Before setting up the environment, please ensure you understand the data structure required for this research.
+> **Note on Copyright:** Due to copyright restrictions, the full narrative texts (`text`) and segmented sentence lists (`sentence_list`) are not provided in the public dataset. Instead, we provide a metadata summary of the analyzed books.
 
-### (1) Input Dataset: `short_novel_merged.csv` (Not Provided)
-Due to **copyright restrictions** regarding proprietary literary content, the full-text dataset is **not publicly provided**. To run the analysis, you must prepare your own CSV file with the following schema:
+### 1. Metadata: `book_list_summary.csv`
+This file contains the bibliographic information of the source texts used in the study.
+* **isbn**: International Standard Book Number (Primary Key)
+* **book_title**: Title of the source book or anthology
+* **author**: Name of the author
+* **publisher**: Name of the publisher
+* **pub_year**: Year of publication
+* **country**: Country of the author
 
-| Column Name | Description |
-|:---|:---|
-| `isbn` | International Standard Book Number |
-| `story_title` | Title of the individual flash fiction story |
-| `text` | **Full narrative text** (Required for processing) |
-| `author` | Name of the author |
-| `birth_year` | Birth year of the author |
-| `gender` | Gender of the author |
-| `book_title` | Title of the source book or anthology |
-| `publisher` | Name of the publisher |
-| `pub_year` | Year of publication |
-| `country` | Country of author |
-
-### (2) Reference Data: `book_list_summary.csv` (Provided)
-We provide a **bibliographic summary** of the works analyzed in this study. This allows researchers to verify the metadata and scope of the research without violating copyright laws.
+### 2. Analysis Files
+* `short_novel_merged.csv`: The initial raw dataset containing full texts.
+* `short_novel_merged_filtered.csv`: Refined dataset after outlier removal.
+* `short_novel_with_surprisal_coherence_semantic.csv`: **[Final Output]** Master file containing all narrative signal vectors, used for the final analysis in `MiniFiction_Analysis.ipynb`.
 
 ---
 
-## 3. Setup & Installation
+## ⚙️ Step-by-Step Pipeline
 
-Follow these steps to configure your system and Python environment.
+The narrative trajectories are generated through the following three-stage script sequence:
 
+### **[Step 1] Preprocessing & Filtering: `check_sent_stats.py`**
+* **Input:** `short_novel_merged.csv`
+* **Process:** * Sentence segmentation using `KSS` and `Mecab`.
+    * Statistical analysis of sentence, character, and token counts.
+    * **Outlier Removal:** Stories in the bottom 5% and top 5% of the sentence count distribution are excluded to ensure corpus homogeneity.
+* **Output:** `short_novel_merged_filtered.csv`
 
+### **[Step 2] Surprisal Extraction: `calculate_surprisal.py`**
+* **Input:** `short_novel_merged_filtered.csv`
+* **Model:** `Solar-10.7B` (LLM)
+* **Metric:** Sentence-level Surprisal (Negative Log-Likelihood).
+* **Logic:** Measures the information-theoretic "shock" of each sentence given its preceding narrative context (3,500 token sliding window).
+* **Output:** `short_novel_with_surprisal.csv`
 
-### (1) System-Level Dependencies (Linux/Ubuntu)
-The MeCab engine must be installed at the OS level first.
-
-```bash
-# Install MeCab engine and Korean dictionaries
-sudo apt-get update
-sudo apt-get install -y libmecab-dev mecab-ko mecab-ko-dic
-```
-
-### (2) Environment Setup (Conda)
-You can set up the environment using the provided `environment.yaml` or via manual installation.
-
-#### Option A: Using `environment.yaml` (Recommended)
-```bash
-conda env create -f environment.yaml
-conda activate narrative_analysis
-```
-
-#### Option B: Manual Installation
-```bash
-conda create -n narrative_analysis python=3.10 -y
-conda activate narrative_analysis
-
-# Build tools must be installed before other packages
-pip install setuptools wheel Cython
-pip install -r requirements.txt
-```
+### **[Step 3] Discourse Signal Calculation: `coherence_topic_calc.py`**
+* **Input:** `short_novel_with_surprisal.csv`
+* **Model:** `ko-sroberta-multitask` (SBERT)
+* **Metrics:**
+    * **Local Coherence:** Cosine similarity between adjacent sentence embeddings.
+      $$\text{Coherence}_t = \cos(v_t, v_{t-1})$$
+    * **Semantic Shift:** Deviation of the current sentence from the cumulative context mean.
+      $$\text{Semantic Shift}_t = 1 - \cos(v_t, \mu_{1..t-1})$$
+* **Output:** `short_novel_with_surprisal_coherence_semantic.csv`
 
 ---
 
-## 4. Research Workflow & Execution
+## 🧪 Final Analysis
 
-
-
-To replicate the analysis, execute the scripts in the following order:
-
-1.  **Surprisal Extraction**:
-    `python calculate_surprisal.py`
-    *Calculates NLL (Negative Log-Likelihood) per sentence using Solar-10.7B.*
-
-2.  **Semantic Metrics Extraction**:
-    `python coherence_topic_calc.py`
-    *Measures local coherence and global semantic shift using SBERT.*
-
-3.  **Statistical Analysis & Visualization**:
-    Open and run `MiniFiction_Analysis.ipynb`.
-    *Performs clustering, sensitivity analysis, and generates research figures.*
-
----
-
-## 5. Analytical Features (`MiniFiction_Analysis.ipynb`)
-
-The final analysis stage transforms numerical vectors into narrative insights:
-* **Clustering**: Groups stories into latent narrative archetypes based on trajectories.
-* **Sensitivity Analysis**: Evaluates cluster stability across parameter variations (Two-way).
-* **Significance Testing**: Conducts ANOVA/Kruskal-Wallis tests across categories.
-* **Visual Output**: Generates heatmaps and plots in the `{project_root}/figures` directory.
-
----
-
-## 6. Troubleshooting
-
-* **Missing Data Error**: Ensure `short_novel_merged.csv` is placed in the project root before execution.
-* **KSS/MeCab Errors**: If KSS fails to install, ensure `Cython` was installed first. If MeCab isn't found, verify the `apt-get` installation in Section 3-(1).
-* **CUDA Mismatch**: Ensure your GPU drivers support CUDA 12.x (recommended for Ubuntu 24.04).
+The final output generated by the pipeline is utilized in **`MiniFiction_Analysis.ipynb`**. This analytical notebook performs:
+1. **Trajectory Clustering:** Identification of narrative archetypes.
+2. **Stability Diagnostics:** Detection and removal of initial 'burn-in' noise.
+3. **Peak Dynamics:** Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
