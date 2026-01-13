@@ -1,45 +1,137 @@
-# 📚 Computational Analysis of Korean Flash Fiction: Data Pipeline
+# 📚 Computational Analysis of Flash Fiction: Data Pipeline
 
 This research investigates the narrative dynamics of Korean flash fiction through computational methods. The pipeline is designed to transform raw narrative texts into multi-dimensional signal trajectories (Surprisal, Coherence, and Semantic Shift) for structural analysis.
 
 ---
 
+## 🛠 Installation Guide (Setup for Flash Fiction Analysis)
+
+This guide provides instructions for setting up the environment for the Korean Flash Fiction analysis project. The project includes features for sentence-level statistical extraction, LLM-based Surprisal calculation, and SBERT-based discourse analysis.
+
+### 1. Environment Setup
+
+#### Method A: Conda (Recommended)
+Create the `flashfiction_analysis` environment using the `environment.yml` file.
+```bash
+conda env create -f environment.yml
+conda activate flashfiction_analysis
+```
+
+#### Method B: Pip
+Manually create the environment and install dependencies via `requirements.txt`.
+```bash
+conda create -n flashfiction_analysis python=3.10 -y
+conda activate flashfiction_analysis
+pip install -r requirements.txt
+```
+
+---
+
+### 2. Mecab Installation (OS-specific Setup)
+
+The `Mecab` engine is required for Korean morphological analysis.
+
+#### 🍎 macOS (Apple Silicon/Intel)
+**Case 1: Homebrew is installed**
+```bash
+# Unlink to prevent conflicts between generic mecab and mecab-ko
+brew unlink mecab
+brew install mecab-ko mecab-ko-dic
+brew link mecab-ko
+pip install mecab-python3
+```
+
+**Case 2: Homebrew is NOT installed**
+```bash
+bash <(curl -s [https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh](https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh))
+pip install mecab-python3
+```
+
+#### 🪟 Windows
+1. **Java JDK Installation**: Install from the Oracle website and set the `JAVA_HOME` environment variable.
+2. **Mecab Binary**: Download the binary from [mecab-ko-msvc](https://github.com/PHeonix-P/mecab-ko-msvc/releases) and extract it to `C:\mecab`.
+3. **Python Library**: 
+   ```bash
+   pip install mecab-python3
+   ```
+
+#### 🐧 Linux (GPU Server)
+Use the official script to install the Mecab engine directly on the system.
+```bash
+bash <(curl -s [https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh](https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh))
+```
+
+---
+
+### 3. KSS and Common Libraries
+The project utilizes `KSS` for Korean sentence segmentation.
+```bash
+pip install kss
+```
+*Note: Windows users may need to install 'Visual Studio Build Tools' if C++ build errors occur during installation.*
+
+---
+
+### 4. Verification
+Verify the installation by running the following Python code to ensure all modules load correctly.
+
+```python
+from konlpy.tag import Mecab
+import kss
+
+# 1. Mecab Morphological Analysis Test
+try:
+    mecab = Mecab()
+    print("Mecab Morph Test:", mecab.morphs("디지털 인문학 분석을 시작합니다."))
+except Exception as e:
+    print("Mecab Error: Check if the mecab engine is installed correctly.")
+
+# 2. KSS Sentence Segmentation Test
+text = "안녕하세요. 문장 분리 테스트 중입니다. 잘 작동하나요?"
+print("KSS Split Test:", kss.split_sentences(text))
+```
+
+---
+
+## ⚠️ Important Note for Server Users
+* **GPU Acceleration**: `calculate_surprisal.py` utilizes 4-bit quantization via `BitsAndBytesConfig`, which requires a **Linux environment and an NVIDIA GPU (CUDA)**.
+* **SBERT Model**: The discourse analysis script (`coherence_topic_calc.py`) uses the `jhgan/ko-sroberta-multitask` model to generate sentence embeddings.
+* **Execution Recommendation**: Use local environments (Mac/Windows) for statistical analysis and visualization (`check_sent_stats.py`) and use a GPU server for heavy LLM computations.
+
+---
+
 ## 📂 Data Inventory
 
-> **Note on Copyright:** Due to copyright restrictions, the full narrative texts (`text`) and segmented sentence lists (`sentence_list`) are not provided in the public dataset. Instead, we provide a metadata summary of the analyzed books.
+> **Note on Copyright:** Due to copyright restrictions, full narrative texts and segmented sentence lists are not provided in the public repository. Metadata summaries are provided instead.
 
 ### 1. Metadata: `book_list_summary.csv`
-This file contains the bibliographic information of the source texts used in the study.
+Contains bibliographic information of the source texts.
 * **isbn**: International Standard Book Number (Primary Key)
-* **book_title**: Title of the source book or anthology
-* **author**: Name of the author
-* **publisher**: Name of the publisher
-* **pub_year**: Year of publication
-* **country**: Country of the author
+* **book_title / author / publisher / pub_year / country**
 
 ### 2. Analysis Files
-* `short_novel_merged.csv`: The initial raw dataset containing full texts. (NOT PROVIDED)
-* `short_novel_merged_filtered.csv`: Refined dataset after outlier removal. (NOT PROVIDED)
-* `short_novel_with_surprisal_coherence_semantic.csv`: **[Final Output]** Master file containing all narrative signal vectors, used for the final analysis in `MiniFiction_Analysis.ipynb`.
+* `short_novel_merged.csv`: Initial raw dataset with full texts (Not provided).
+* `short_novel_merged_filtered.csv`: Refined dataset after outlier removal.
+* `short_novel_with_surprisal_coherence_semantic.csv`: **[Final Master File]** Contains all integrated narrative signal vectors for final analysis.
 
 ---
 
 ## ⚙️ Step-by-Step Pipeline
 
-The narrative trajectories are generated through the following three-stage script sequence:
+The narrative trajectories are generated through a three-stage sequence:
 
 ### **[Step 1] Preprocessing & Filtering: `check_sent_stats.py`**
 * **Input:** `short_novel_merged.csv`
 * **Process:** * Sentence segmentation using `KSS` and `Mecab`.
     * Statistical analysis of sentence, character, and token counts.
-    * **Outlier Removal:** Stories in the bottom 5% and top 5% of the sentence count distribution are excluded to ensure corpus homogeneity.
-* **Output:** `short_novel_merged_filtered.csv` , `length_analysis.zip`
+    * **Outlier Removal:** Stories in the bottom 5% and top 5% of the sentence count distribution are excluded to ensure homogeneity.
+* **Output:** `short_novel_merged_filtered.csv`, `length_analysis.zip`
 
 ### **[Step 2] Surprisal Extraction: `calculate_surprisal.py`**
 * **Input:** `short_novel_merged_filtered.csv`
-* **Model:** `Solar-10.7B` (LLM)
+* **Model:** `Solar-10.7B` (LLM) utilizing a 3,500 token sliding window.
 * **Metric:** Sentence-level Surprisal (Negative Log-Likelihood).
-* **Logic:** Measures the information-theoretic "shock" of each sentence given its preceding narrative context (3,500 token sliding window).
+* **Logic:** Measures the information-theoretic "shock" of each sentence within its narrative context.
 * **Output:** `short_novel_with_surprisal.csv`
 
 ### **[Step 3] Discourse Signal Calculation: `coherence_topic_calc.py`**
@@ -56,7 +148,7 @@ The narrative trajectories are generated through the following three-stage scrip
 
 ## 🧪 Final Analysis
 
-The final output generated by the pipeline is utilized in **`MiniFiction_Analysis.ipynb`**. This analytical notebook performs:
-1. **Stability Diagnostics:** Detection and removal of initial 'burn-in' noise.
-2. **Trajectory Clustering:** Identification of narrative archetypes.
-3. **Peak Dynamics:** Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
+The master output is utilized in **`MiniFiction_Analysis.ipynb`**. This notebook performs:
+1. **Stability Diagnostics**: Detection and removal of initial 'burn-in' noise.
+2. **Trajectory Clustering**: Identification of narrative archetypes and structural patterns.
+3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
