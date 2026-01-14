@@ -110,9 +110,9 @@ Contains bibliographic information of the source texts.
 * **book_title / author / publisher / pub_year / country**
 
 ### 2. Analysis Files
-* `short_novel_merged.csv`: Initial raw dataset with full texts (Not provided).
-* `short_novel_merged_filtered.csv`: Refined dataset after outlier removal.
-* `short_novel_with_surprisal_coherence_semantic.csv`: **[Final Master File]** Contains all integrated narrative signal vectors for final analysis.
+* `flash_fiction_merged.csv`: Initial raw dataset with full texts (Not provided).
+* `flash_fiction_merged_filtered.csv`: Refined dataset after outlier removal.
+* `flash_fiction_with_surprisal_coherence_semantic.csv`: **[Final Master File]** Contains all integrated narrative signal vectors for final analysis.
 
 ---
 
@@ -121,28 +121,28 @@ Contains bibliographic information of the source texts.
 The narrative trajectories are generated through a three-stage sequence:
 
 ### **[Step 1] Preprocessing & Filtering: `check_sent_stats.py`**
-* **Input:** `short_novel_merged.csv`
+* **Input:** `flash_fiction_merged.csv`
 * **Process:** * Sentence segmentation using `KSS` and `Mecab`.
     * Statistical analysis of sentence, character, and token counts.
     * **Outlier Removal:** Stories in the bottom 5% and top 5% of the sentence count distribution are excluded to ensure homogeneity.
-* **Output:** `short_novel_merged_filtered.csv`, `length_analysis.zip`
+* **Output:** `flash_fiction_merged_filtered.csv`, `length_analysis.zip`
 
 ### **[Step 2] Surprisal Extraction: `calculate_surprisal.py`**
-* **Input:** `short_novel_merged_filtered.csv`
+* **Input:** `flash_fiction_merged_filtered.csv`
 * **Model:** `Solar-10.7B` (LLM) utilizing a 3,500 token sliding window.
 * **Metric:** Sentence-level Surprisal (Negative Log-Likelihood).
 * **Logic:** Measures the information-theoretic "shock" of each sentence within its narrative context.
-* **Output:** `short_novel_with_surprisal.csv`
+* **Output:** `flash_fiction_with_surprisal.csv`
 
 ### **[Step 3] Discourse Signal Calculation: `coherence_topic_calc.py`**
-* **Input:** `short_novel_with_surprisal.csv`
+* **Input:** `flash_fiction_with_surprisal.csv`
 * **Model:** `ko-sroberta-multitask` (SBERT)
 * **Metrics:**
     * **Local Coherence:** Cosine similarity between adjacent sentence embeddings.
       $$\text{Coherence}_t = \cos(v_t, v_{t-1})$$
     * **Semantic Shift:** Deviation of the current sentence from the cumulative context mean.
       $$\text{Semantic Shift}_t = 1 - \cos(v_t, \mu_{1..t-1})$$
-* **Output:** `short_novel_with_surprisal_coherence_semantic.csv`
+* **Output:** `flash_fiction_with_surprisal_coherence_semantic.csv`
 
 ---
 
