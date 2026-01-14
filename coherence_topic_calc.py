@@ -86,9 +86,9 @@ def calculate_coherence_and_semantic_shift(sentences):
 # 4. Main Integration Pipeline
 # ==========================================
 def main():
-    base_path = "/home/qgroup2/sungpil/short_novel"
-    input_file = os.path.join(base_path, "short_novel_with_surprisal.csv")
-    output_file = os.path.join(base_path, "short_novel_with_surprisal_coherence_semantic.csv")
+    base_path = "/home/qgroup2/sungpil/flash_fiction"
+    input_file = os.path.join(base_path, "flash_fiction_with_surprisal.csv")
+    output_file = os.path.join(base_path, "flash_fiction_with_surprisal_coherence_semantic.csv")
 
     if not os.path.exists(input_file):
         print("Error: Input file (Surprisal CSV) not found.")

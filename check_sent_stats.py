@@ -164,13 +164,13 @@ def save_results(df, suffix, output_dir, lower_limit=None, upper_limit=None):
 # 2. Main Execution Pipeline
 # ==========================================
 def main():
-    base_path = "/home/qgroup2/sungpil/short_novel"
+    base_path = "/home/qgroup2/sungpil/flash_fiction"
     output_dir = os.path.join(base_path, "length_analysis")
     os.makedirs(output_dir, exist_ok=True)
 
-    input_file = os.path.join(base_path, "short_novel_merged.csv")
+    input_file = os.path.join(base_path, "flash_fiction_merged.csv")
     # Standalone filtered file path (Outside the ZIP)
-    filtered_output_file = os.path.join(base_path, "short_novel_merged_filtered.csv")
+    filtered_output_file = os.path.join(base_path, "flash_fiction_merged_filtered.csv")
     
     tokenizer = AutoTokenizer.from_pretrained("beomi/OPEN-SOLAR-KO-10.7B")
 
