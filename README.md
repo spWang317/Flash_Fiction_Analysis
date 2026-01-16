@@ -152,3 +152,5 @@ The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This noteboo
 1. **Stability Diagnostics**: Detection and removal of initial 'burn-in' noise.
 2. **Trajectory Clustering**: Identification of narrative archetypes and structural patterns.
 3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
+
+**Upon execution, all generated statistical reports and numerical summaries are saved to the `statistical_outputs/` directory, while all visualization plots and figures are exported to the `figure_outputs/` directory for further review.**
