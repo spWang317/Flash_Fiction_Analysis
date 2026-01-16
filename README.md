@@ -142,13 +142,14 @@ The narrative trajectories are generated through a three-stage sequence:
       $$\text{Coherence}_t = \cos(v_t, v_{t-1})$$
     * **Semantic Shift:** Deviation of the current sentence from the cumulative context mean.
       $$\text{Semantic Shift}_t = 1 - \cos(v_t, \mu_{1..t-1})$$
-* **Output:** `flash_fiction_with_surprisal_coherence_semantic.csv`
+* **Output:** `flash_fiction_with_surprisal_coherence_semantic.csv` 
 
 ---
 
 ## 🧪 Final Analysis
 
 The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This notebook performs:
+* **Input:** `flash_fiction_with_surprisal_coherence_semantic.csv` 
 1. **Stability Diagnostics**: Detection and removal of initial 'burn-in' noise.
 2. **Trajectory Clustering**: Identification of narrative archetypes and structural patterns.
 3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
