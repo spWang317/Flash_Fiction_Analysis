@@ -139,9 +139,7 @@ The narrative trajectories are generated through a three-stage sequence:
 * **Model:** `ko-sroberta-multitask` (SBERT)
 * **Metrics:**
     * **Local Coherence:** Cosine similarity between adjacent sentence embeddings.
-      $$\text{Coherence}_t = \cos(v_t, v_{t-1})$$
     * **Semantic Shift:** Deviation of the current sentence from the cumulative context mean.
-      $$\text{Semantic Shift}_t = 1 - \cos(v_t, \mu_{1..t-1})$$
 * **Output:** `flash_fiction_with_surprisal_coherence_semantic.csv` 
 
 ---
