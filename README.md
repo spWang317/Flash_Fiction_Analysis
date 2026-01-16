@@ -1,4 +1,4 @@
-# 📚 Computational Analysis of Flash Fiction: Data Pipeline
+# 📚 Computational Analysis of Flash Fiction
 
 This research investigates the narrative dynamics of Korean flash fiction through computational methods. The pipeline is designed to transform raw narrative texts into multi-dimensional signal trajectories (Surprisal, Coherence, and Semantic Shift) for structural analysis.
 
