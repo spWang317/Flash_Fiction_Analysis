@@ -153,3 +153,14 @@ The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This noteboo
 3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
 
 **Upon execution, all generated statistical reports and numerical summaries are saved to the `statistical_outputs/` directory, while all visualization plots and figures are exported to the `figure_outputs/` directory for further review.**
+
+
+
+## 📄 Citation & Preprint
+
+If you find this framework or the provided semantic dynamics analysis useful for your research, please cite our preprint:
+**"The Fracture and Leap Cycle: Quantifying Narrative Surprise and Structural Resilience in Flash Fiction"**
+
+* **Preprint Server**: Research Square
+* **DOI**: [10.21203/rs.3.rs-8619161/v1](https://doi.org/10.21203/rs.3.rs-8619161/v1)
+* **URL**: [https://www.researchsquare.com/article/rs-8619161/v1](https://www.researchsquare.com/article/rs-8619161/v1)
