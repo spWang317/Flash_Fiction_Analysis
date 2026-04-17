@@ -154,4 +154,3 @@ If you find this repository useful, please cite:
 **Wang, S. (2026).** The Fracture and Leap Cycle: Quantifying Narrative Surprise and Structural Resilience in Flash Fiction.
 
 - **Preprint DOI:** [10.21203/rs.3.rs-8619161/v1](https://doi.org/10.21203/rs.3.rs-8619161/v1)
-- **Repository DOI:** [10.5281/zenodo.19625501](https://doi.org/10.5281/zenodo.19625501)
