@@ -1,0 +1,41 @@
+========================================================================================
+STORY-LEVEL SENSITIVITY ANALYSIS REPORT
+========================================================================================
+
+Aggregation: each story's peak-level Z-deviations averaged into a single
+per-story value before testing. One observation per narrative.
+Total peaks (peak-level): 3620
+Total stories with peaks (story-level): 2371
+
+Story-level N matches Table 3 zero-peak frequencies (sanity check):
+  Arch 0: 451 total, 436 with peaks, 3.33% zero-peak (Table 3: 3.33%)
+  Arch 1: 563 total, 435 with peaks, 22.74% zero-peak (Table 3: 22.74%)
+  Arch 2: 449 total, 438 with peaks, 2.45% zero-peak (Table 3: 2.45%)
+  Arch 3: 568 total, 479 with peaks, 15.67% zero-peak (Table 3: 15.67%)
+  Arch 4: 605 total, 583 with peaks, 3.64% zero-peak (Table 3: 3.64%)
+
+----------------------------------------------------------------------------------------
+STORY-LEVEL TESTS vs PEAK-LEVEL (Table 4) COMPARISON
+----------------------------------------------------------------------------------------
+
+Arch Metric          N_peak  Mean(peak)  Sig(peak)  N_stry  Mean(stry)  p_adj(stry)   Sig(stry)  Match 
+-------------------------------------------------------------------------------------------------------
+0    Coherence       690     -0.1858     ***        436     -0.1855     0.0000        ***        OK    
+0    SemanticShift   690     +0.2059     ***        436     +0.2102     0.0000        ***        OK    
+1    Coherence       647     -0.1205     **         435     -0.1377     0.0054        **         OK    
+1    SemanticShift   647     +0.3266     ***        435     +0.3469     0.0000        ***        OK    
+2    Coherence       686     -0.1620     ***        438     -0.1914     0.0000        ***        OK    
+2    SemanticShift   686     +0.2152     ***        438     +0.2411     0.0000        ***        OK    
+3    Coherence       711     -0.1608     ***        479     -0.1668     0.0001        ***        OK    
+3    SemanticShift   711     +0.3141     ***        479     +0.3454     0.0000        ***        OK    
+4    Coherence       886     -0.0664     n.s.       583     -0.0625     0.1559        n.s.       OK    
+4    SemanticShift   886     +0.3428     ***        583     +0.3610     0.0000        ***        OK    
+
+Notes:
+  - Sign direction matches Table 4 in every cell.
+  - Significance pattern matches Table 4 in every cell, including
+    the non-significant coherence deviation in Archetype 4.
+  - Story-level p-values are larger than peak-level (smaller N reduces
+    power) but do not change any qualitative conclusion.
+  - This indicates that the reported findings are not artefacts of
+    treating successive within-story peaks as independent observations.

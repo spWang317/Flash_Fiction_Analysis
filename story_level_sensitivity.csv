@@ -1,0 +1,11 @@
+Archetype,Metric,N_peaks_Table4,Mean_Z_peak_Table4,Sig_peak_Table4,N_stories,Mean_Z_story,Method_story,Statistic_story,p_raw_story,p_adj_Bonf_story,Sig_story,Sign_match,Significance_match
+0,Coherence,690,-0.1858,***,436,-0.1855,one-sample t,-4.8483,1.7362600775422304e-06,1.7362600775422304e-05,***,True,True
+0,SemanticShift,690,0.2059,***,436,0.2102,one-sample t,5.9298,6.188558436179263e-09,6.188558436179263e-08,***,True,True
+1,Coherence,647,-0.1205,**,435,-0.1377,one-sample t,-3.4882,0.0005360233709776279,0.005360233709776279,**,True,True
+1,SemanticShift,647,0.3266,***,435,0.3469,one-sample t,8.3042,1.2912513720708973e-15,1.2912513720708974e-14,***,True,True
+2,Coherence,686,-0.162,***,438,-0.1914,one-sample t,-5.5519,4.911191078834964e-08,4.911191078834963e-07,***,True,True
+2,SemanticShift,686,0.2152,***,438,0.2411,one-sample t,6.3833,4.4321256066372573e-10,4.4321256066372574e-09,***,True,True
+3,Coherence,711,-0.1608,***,479,-0.1668,one-sample t,-4.5893,5.691559173238024e-06,5.691559173238024e-05,***,True,True
+3,SemanticShift,711,0.3141,***,479,0.3454,one-sample t,8.7492,3.699171594825572e-17,3.699171594825572e-16,***,True,True
+4,Coherence,886,-0.0664,n.s.,583,-0.0625,Wilcoxon,75278.0,0.015589775304660342,0.15589775304660342,n.s.,True,True
+4,SemanticShift,886,0.3428,***,583,0.361,one-sample t,10.9982,1.0800741999566176e-25,1.0800741999566176e-24,***,True,True

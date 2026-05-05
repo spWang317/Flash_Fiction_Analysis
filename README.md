@@ -1,156 +1,104 @@
-# 📚 Computational Analysis of Flash Fiction
+# Narrative Dynamics in Korean Flash Fiction: Computational Analysis Pipeline
 
-This repository provides the full computational pipeline and pre-computed signals for the study:
-**"The Fracture and Leap Cycle: Quantifying Narrative Surprise and Structural Resilience in Flash Fiction"**
+This repository provides the code and data signals necessary to replicate the findings of our research.
 
-> **Note on Copyright:** Due to copyright restrictions, the original narrative texts cannot be shared publicly. However, the pre-computed numerical signals are provided, allowing immediate reproduction of all statistical analyses and figures reported in the paper.
+### 📢 Important Note on Reproducibility & Data Availability
+To comply with copyright restrictions regarding the original literary texts, the raw dataset (`flash_fiction_merged.csv`) is not included in this repository. 
+
+- **For Transparency:** Scripts for data preprocessing and LLM-based signal extraction (Stages 1–3) are provided to document our methodology. These scripts require high-performance computing (e.g., Solar-10.7B LLM) and the restricted raw corpus.
+- **For Replication:** We provide the **pre-computed master file** (`flash_fiction_with_surprisal_coherence_semantic.csv`), which contains the numerical signals for all analyzed stories. Users can immediately replicate the statistical analysis, trajectory clustering, and peak dynamics by running the `FlashFiction_Analysis.ipynb` notebook.
+---
+
+## 🚀 Quick Start (Analysis Only)
+
+To replicate the statistical analysis and visualization:
+1. Ensure the **`flash_fiction_with_surprisal_coherence_semantic.csv`** (Final Master File) is in your data directory.
+2. Run the **`FlashFiction_Analysis.ipynb`** notebook. 
+3. This notebook utilizes pre-calculated numerical signals to generate research findings without requiring the restricted raw texts.
 
 ---
 
-## ⚡ Quick Start (Recommended)
+## 🛠 Installation Guide
 
-All statistical analyses and figures in the paper can be immediately reproduced using the pre-computed master dataset.
+The environment setup is optimized for the analysis and visualization phase. You can set up the environment using either Conda or Pip.
 
-### Requirements
-- Python 3.10+
-- Jupyter Notebook
-
-### Steps
-
-1. Install dependencies:
-
+### Method A: Conda (Recommended)
 ```bash
-conda env create -f environment.yml
+# Create the environment using environment.yml
+conda env create -f environment.yaml
 conda activate flashfiction_analysis
 ```
 
-or
-
+### Method B: Pip
 ```bash
-pip install -r requirements.txt
-```
-
-2. Open and run the notebook:
-
-```bash
-jupyter notebook FlashFiction_Analysis.ipynb
-```
-
-The notebook will automatically load `flash_fiction_with_surprisal_coherence_semantic.csv` and reproduce all results. Statistical outputs are saved to `statistical_outputs/` and figures to `figure_outputs/`.
-
----
-
-## 📂 Data Inventory
-
-| File | Available | Description |
-|------|-----------|-------------|
-| `flash_fiction_with_surprisal_coherence_semantic.csv` | ✅ | Master dataset with pre-computed Surprisal, Coherence, and Semantic Shift signals |
-| `book_list_summary.csv` | ✅ | Bibliographic metadata for corpus reconstruction |
-| `flash_fiction_merged.csv` | ❌ | Raw dataset with full texts (copyright restricted) |
-| `flash_fiction_merged_filtered.csv` | ❌ | Filtered dataset (copyright restricted) |
-
-### `book_list_summary.csv` columns
-- **isbn**: International Standard Book Number (Primary Key)
-- **book_title / author / publisher / pub_year / country**
-
-Researchers wishing to reconstruct the corpus may obtain the original texts via commercially available editions or library services using the metadata provided.
-
----
-
-## ⚙️ Full Pipeline (For researchers with original texts)
-
-If you have access to the original narrative texts, the full three-stage pipeline can be executed as follows.
-
-### Environment Setup
-
-#### Method A: Conda (Recommended)
-
-```bash
-conda env create -f environment.yml
-conda activate flashfiction_analysis
-```
-
-#### Method B: Pip
-
-```bash
+# Create a fresh environment and install via requirements.txt
 conda create -n flashfiction_analysis python=3.10 -y
 conda activate flashfiction_analysis
 pip install -r requirements.txt
 ```
 
-### Mecab Installation (Required for Step 1)
-
-#### 🍎 macOS
-
-```bash
-brew unlink mecab
-brew install mecab-ko mecab-ko-dic
-brew link mecab-ko
-pip install mecab-python3
-```
-
-#### 🪟 Windows
-
-1. Install Java JDK and set `JAVA_HOME`
-2. Download [mecab-ko-msvc](https://github.com/PHeonix-P/mecab-ko-msvc/releases) and extract to `C:\mecab`
-3. `pip install mecab-python3`
-
-#### 🐧 Linux
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
-```
-
-### KSS Installation
-
-```bash
-pip install kss
-```
-
-### Installation Verification
-
-```python
-from konlpy.tag import Mecab
-import kss
-
-try:
-    mecab = Mecab()
-    print("Mecab Morph Test:", mecab.morphs("디지털 인문학 분석을 시작합니다."))
-except Exception as e:
-    print("Mecab Error: Check if the mecab engine is installed correctly.")
-
-text = "안녕하세요. 문장 분리 테스트 중입니다. 잘 작동하나요?"
-print("KSS Split Test:", kss.split_sentences(text))
-```
+*Note: Dependencies for heavy LLMs (Solar-10.7B) and raw text processing have been excluded from the current setup files to maintain a lightweight analysis environment.*
 
 ---
 
-### Step 1. Preprocessing & Filtering: `check_sent_stats.py`
+## 📂 Data Inventory
 
-- **Input:** `flash_fiction_merged.csv` (original texts required)
-- **Process:** Sentence segmentation (KSS + Mecab), outlier removal (bottom/top 5% by sentence count)
-- **Output:** `flash_fiction_merged_filtered.csv`, `length_analysis.zip`
+To comply with copyright laws, we provide the calculated numerical signals while restricting access to the original literary texts.
 
-### Step 2. Surprisal Extraction: `calculate_surprisal.py`
-
-- **Input:** `flash_fiction_merged_filtered.csv`
-- **Model:** `beomi/OPEN-SOLAR-KO-10.7B` with 3500-token sliding window
-- **Requirement:** Linux + NVIDIA GPU (CUDA) for 4-bit quantization
-- **Output:** `flash_fiction_with_surprisal.csv`
-
-### Step 3. Discourse Signal Calculation: `coherence_topic_calc.py`
-
-- **Input:** `flash_fiction_with_surprisal.csv`
-- **Model:** `jhgan/ko-sroberta-multitask`
-- **Metrics:** Local Coherence (cosine similarity between adjacent sentences), Semantic Shift (deviation from cumulative context mean)
-- **Output:** `flash_fiction_with_surprisal_coherence_semantic.csv`
+| File Name | Provided? | Description |
+| :--- | :---: | :--- |
+| `book_list_summary.csv` | **Yes** | Metadata (ISBN, Title, Author, Publisher, etc.) |
+| **`flash_fiction_with_surprisal_coherence_semantic.csv`** | **Yes** | **Final Master File** (Numerical signals only) |
+| `flash_fiction_merged.csv` | No | Initial raw dataset with full texts (Restricted) |
+| `flash_fiction_merged_filtered.csv` | No | Refined dataset after outlier removal (Restricted) |
 
 ---
 
-## 📄 Citation
+## ⚙️ Research Pipeline (Methodological Reference)
 
-If you find this repository useful, please cite:
+The following stages describe how the narrative signals were generated. These scripts are provided to ensure the transparency of our research methodology.
 
-**Wang, S. (2026).** The Fracture and Leap Cycle: Quantifying Narrative Surprise and Structural Resilience in Flash Fiction.
+### **[Phase 1] Data Generation (Reference Only)**
+*These steps require access to the restricted raw dataset and a high-compute environment.*
+1. **Preprocessing & Filtering (`check_sent_stats.py`)**
+   - Sentence segmentation using `KSS` and `Mecab`.
+   - Outlier Removal: Stories in the bottom 5% and top 5% of the sentence count distribution are excluded.
+2. **Surprisal Extraction (`calculate_surprisal.py`)**
+   - Model: `Solar-10.7B` (LLM) utilizing a 3,500 token sliding window.
+   - Metric: Sentence-level Surprisal (Negative Log-Likelihood).
+3. **Discourse Signal Calculation (`coherence_topic_calc.py`)**
+   - Model: `ko-sroberta-multitask` (SBERT).
+   - **Local Coherence**: $\text{Coherence}_t = \cos(v_t, v_{t-1})$
+   - **Semantic Shift**: $\text{Semantic Shift}_t = 1 - \cos(v_t, \mu_{1..t-1})$
 
-- **Preprint DOI:** [10.21203/rs.3.rs-8619161/v1](https://doi.org/10.21203/rs.3.rs-8619161/v1)
+### **[Phase 2] Final Analysis (Executable)**
+*This stage is performed using the provided numerical signals.*
+The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This notebook performs:
+* **Input:** `flash_fiction_with_surprisal_coherence_semantic.csv` 
+1. **Stability Diagnostics**: Detection and removal of initial 'burn-in' noise.
+2. **Trajectory Clustering**: Identification of narrative archetypes and structural patterns.
+3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
+
+**Upon execution, all generated statistical reports and numerical summaries are saved to the `statistical_outputs/` directory, while all visualization plots and figures are exported to the `figure_outputs/` directory for further review.**
+
+### **[Phase 3] Robustness Checks (Executable)**
+*Standalone scripts that re-load the clustered master file and produce supplementary diagnostics.*
+
+* **Input:** `statistical_outputs/flash_fiction_clustered_surprisal_stable.csv` (generated by Phase 2)
+
+1. **Archetype × Translation cross-tabulation (`archetype_translation_crosstab.py`)**
+   - Tests whether translated works (8.7% of corpus) are unevenly distributed across the five archetypes (chi-square test of independence).
+   - Within-cluster Mann-Whitney U test on Archetype 4 peak position (Korean originals vs. translated works), confirming the front-loaded pattern is invariant to translation status.
+   - Outputs: `archetype_origin_crosstab.csv`, `archetype_origin_chisquare_report.txt`.
+   - Reproduces Supplementary Table S1(d).
+
+2. **Story-level sensitivity analysis (`story_level_sensitivity.py`)**
+   - Aggregates each story's peak-level Z-deviations into a single per-story mean before testing, addressing potential within-story autocorrelation between successive peaks.
+   - Re-runs the same one-sample tests as in main-text Table 4 on the story-level means and compares results cell-by-cell.
+   - Outputs: `story_level_sensitivity.csv`, `story_level_sensitivity_report.txt`.
+   - Reproduces Supplementary Table S12.
+
+```bash
+python archetype_translation_crosstab.py
+python story_level_sensitivity.py
+```

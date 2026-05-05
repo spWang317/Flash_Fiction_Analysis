@@ -1,0 +1,67 @@
+==============================================================================
+ARCHETYPE x ORIGIN CROSS-TABULATION REPORT
+==============================================================================
+
+Corpus N: 2636  (after dropping 'Unknown' country: 2629)
+Translated overall: 234 (8.90%)
+
+Cross-tabulation (counts):
+origin        Korean original  Translated
+cluster_surp                             
+0                         420          30
+1                         506          55
+2                         418          31
+3                         516          48
+4                         535          70
+
+With totals, percentages, and standardized residuals (Translated col):
+origin        Korean original  Translated   Total  Translated_pct  Std_residual_Translated
+cluster_surp                                                                              
+0                       420.0        30.0   450.0            6.67                   -1.589
+1                       506.0        55.0   561.0            9.80                    0.717
+2                       418.0        31.0   449.0            6.90                   -1.418
+3                       516.0        48.0   564.0            8.51                   -0.311
+4                       535.0        70.0   605.0           11.57                    2.201
+Total                  2395.0       234.0  2629.0            8.90                      NaN
+
+Expected counts under independence:
+origin        Korean original  Translated
+cluster_surp                             
+0                      409.95       40.05
+1                      511.07       49.93
+2                      409.04       39.96
+3                      513.80       50.20
+4                      551.15       53.85
+
+Standardized residuals (|z| > 2 = notable deviation):
+origin        Korean original  Translated
+cluster_surp                             
+0                       0.497      -1.589
+1                      -0.224       0.717
+2                       0.443      -1.418
+3                       0.097      -0.311
+4                      -0.688       2.201
+
+Chi-square test of independence: chi2 = 10.965, df = 4, p = 0.0270
+
+------------------------------------------------------------------------------
+WITHIN-CLUSTER ROBUSTNESS CHECK (Archetype 4)
+------------------------------------------------------------------------------
+Korean original (n = 535): peak_pos mean = 0.188, median = 0.170
+Translated      (n = 70): peak_pos mean = 0.167, median = 0.170
+Mann-Whitney U (two-sided): U = 18670, p = 0.9674
+
+Interpretation: Within Archetype 4, peak position does NOT differ
+between Korean originals and translated works, indicating that the
+front-loaded pattern is invariant to translation status.
+
+------------------------------------------------------------------------------
+COUNTRY BREAKDOWN BY ARCHETYPE
+------------------------------------------------------------------------------
+country       러시아  미국  스페인  아일랜드  영국  일본  캐나다  프랑스   한국  헝가리
+cluster_surp                                                
+0               0  10    0     0   1  17    1    0  420    1
+1               1  12    0     0   4  38    0    0  506    0
+2               0   4    0     1   1  25    0    0  418    0
+3               0  11    1     0   3  30    0    3  516    0
+4               0  19    0     0   4  47    0    0  535    0
