@@ -93,13 +93,11 @@ The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This noteboo
    - Tests whether translated works (8.7% of corpus) are unevenly distributed across the five archetypes (chi-square test of independence).
    - Within-cluster Mann-Whitney U test on Archetype 4 peak position (Korean originals vs. translated works), confirming the front-loaded pattern is invariant to translation status.
    - Outputs: `archetype_origin_crosstab.csv`, `archetype_origin_chisquare_report.txt`.
-   - Reproduces Supplementary Table S1(d).
 
 2. **Story-level sensitivity analysis (`story_level_sensitivity.py`)**
    - Aggregates each story's peak-level Z-deviations into a single per-story mean before testing, addressing potential within-story autocorrelation between successive peaks.
    - Re-runs the same one-sample tests as in main-text Table 4 on the story-level means and compares results cell-by-cell.
    - Outputs: `story_level_sensitivity.csv`, `story_level_sensitivity_report.txt`.
-   - Reproduces Supplementary Table S12.
 
 ```bash
 python archetype_translation_crosstab.py
