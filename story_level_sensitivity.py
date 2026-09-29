@@ -17,7 +17,8 @@ Outputs:
   - statistical_outputs/story_level_sensitivity.csv
   - statistical_outputs/story_level_sensitivity_report.txt
 
-Reproduces results reported in Supplementary Table S12.
+Reproduces results reported in Supplementary Table S10 of the revised manuscript
+(Supplementary Table S12 of the submitted version).
 """
 
 import os
