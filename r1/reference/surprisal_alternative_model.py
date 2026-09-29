@@ -1,15 +1,17 @@
-"""Sentence-level surprisal with an alternative causal LM on the ARCHIVED sentence splits
-(segmentation held fixed; only the LM changes). Numbers only are written.
+"""Sentence-level surprisal from an alternative causal language model (reference only).
 
-Reproduces calculate_surprisal.py (paper): for sentence i the input is [history + sentence_i],
-loss = mean NLL over sentence_i tokens, special tokens only on the first sentence, history truncated
-to the last WINDOW tokens. For stories whose total tokens <= WINDOW this equals ONE causal forward
-pass over the concatenated ids, so we do that; longer stories fall back to the paper's loop.
+Requires the restricted sentence file (columns: row, isbn, sentence_list), which is not distributed.
+The sentence segmentation is held fixed; only the language model changes.
 
-Resumable: rows already in --out are skipped.
+The computation follows calculate_surprisal.py: for sentence i the input is the preceding sentences
+followed by sentence i, the surprisal is the mean negative log-likelihood over the tokens of sentence i,
+special tokens are added only before the first sentence, and the history is truncated to the last
+WINDOW tokens. When a whole story fits within WINDOW tokens, this equals a single forward pass over
+the concatenated story, which is what the script does; longer stories are processed sentence by sentence.
 
-  python scripts/altlm_surprisal.py --in data/sentences_2636.csv --model Qwen/Qwen2.5-7B --out out/surp_qwen25_7b.jsonl
-  python scripts/altlm_surprisal.py --in data/sentences_2636.csv --model beomi/OPEN-SOLAR-KO-10.7B --nf4 --limit 30 --out out/check_solar30.jsonl
+Rows already present in --out are skipped, so an interrupted run can be resumed.
+
+  python surprisal_alternative_model.py --in sentences.csv --model Qwen/Qwen2.5-7B --out surprisal_qwen25_7b.jsonl
 """
 import argparse, ast, json, os, time
 import numpy as np, pandas as pd, torch
@@ -38,7 +40,7 @@ if a.nf4:
     kw["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_use_double_quant=True,
                                                    bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
 model = AutoModelForCausalLM.from_pretrained(a.model, **kw).eval()
-# special tokens the tokenizer adds in front of the first sentence (paper: add_special_tokens only for i == 0)
+# special tokens the tokenizer adds in front of the first sentence (added only for the first sentence)
 first_prefix = tok.encode("", add_special_tokens=True)
 
 df = pd.read_csv(a.inp, usecols=["row", "isbn", "sentence_list"])
@@ -81,7 +83,7 @@ with open(a.out, "a") as f:
                 idx = np.arange(max(start, 1), pos + len(p)) - 1
                 out.append(round(float(nll[idx].mean()), 4) if len(idx) else float("nan"))
                 pos += len(p)
-        else:  # paper's sliding loop
+        else:  # sentence by sentence, with truncated history
             n_long = 1
             hist = []
             for j, p in enumerate(pieces):
