@@ -98,18 +98,17 @@ The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This noteboo
 python story_level_sensitivity.py
 ```
 
-The cross-tabulation of archetype and translation status (Supplementary Table S1d) is produced by `r1/01_main_analysis.py`.
+The cross-tabulation of archetype and translation status (Supplementary Table S1d) is produced by `analysis/01_main_analysis.py`.
 
-### **[Revision R1] Analysis scripts for the revised manuscript (Executable)**
-*The numbers reported in the revised manuscript and its Supplementary Material are produced by the scripts in `r1/`.*
+### **[Phase 4] Reported statistics and sensitivity analyses (Executable)**
+*The numbers reported in the manuscript and its Supplementary Material are produced by the scripts in `analysis/`.*
 
-* **Input:** `flash_fiction_with_surprisal_coherence_semantic.csv` and the numerical files in `r1/data/`
-* See `r1/README.md` for the correspondence between tables and scripts.
-* Where a value in `FlashFiction_Analysis.ipynb` differs from the revised manuscript, the scripts in `r1/` are the reference.
+* **Input:** `flash_fiction_with_surprisal_coherence_semantic.csv` and the numerical files in `analysis/data/`
+* See `analysis/README.md` for the correspondence between tables and scripts.
 
 ```bash
-pip install -r r1/requirements.txt
-cd r1
+pip install -r analysis/requirements.txt
+cd analysis
 python 01_main_analysis.py
 python 02_sensitivity.py
 python 03_figure_S3.py

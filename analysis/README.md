@@ -1,6 +1,6 @@
-# Analysis scripts for the revised manuscript (R1)
+# Analysis scripts
 
-These scripts produce the numbers reported in the revised manuscript and its Supplementary Material.
+These scripts produce the numbers reported in the manuscript and its Supplementary Material.
 They use numerical signals only. The story texts are under copyright and are not distributed.
 
 ## How to run
@@ -9,13 +9,13 @@ Place this folder next to `flash_fiction_with_surprisal_coherence_semantic.csv` 
 
 ```bash
 pip install -r requirements.txt
-cd r1
+cd analysis
 python 01_main_analysis.py
 python 02_sensitivity.py
 python 03_figure_S3.py
 ```
 
-Results are written to `r1/out/`. The three scripts take a few minutes on a laptop.
+Results are written to `analysis/out/`. The three scripts take a few minutes on a laptop.
 
 ## Where each result comes from
 
@@ -37,8 +37,7 @@ Results are written to `r1/out/`. The three scripts take a few minutes on a lapt
 
 Supplementary Table S10 (story-level analysis) is produced by `story_level_sensitivity.py` in the repository root.
 
-Where a value in `FlashFiction_Analysis.ipynb` differs from the revised manuscript (Table 1, Table 2,
-Supplementary Tables S5 and S6), the scripts in this folder are the reference.
+The figures of the manuscript are produced by `FlashFiction_Analysis.ipynb` in the repository root.
 
 ## Data files (`data/`)
 

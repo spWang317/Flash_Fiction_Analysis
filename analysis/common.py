@@ -1,4 +1,4 @@
-"""Shared functions for the revision (R1) analyses. Inputs are numerical signals only."""
+"""Shared functions for the analyses. Inputs are numerical signals only."""
 import ast, json, math, os
 import numpy as np
 import pandas as pd

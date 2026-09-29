@@ -1,4 +1,4 @@
-"""Main-settings results of the revised manuscript: Table 1, Table 2 (with Supplementary Tables S5, S6),
+"""Results under the main settings: Table 1, Table 2 (with Supplementary Tables S5, S6),
 Table 3, translation comparison (S1d), variance shares and three-signal clustering (Section 3.2),
 choice of k (Supplementary Fig. S3), Table 4 and the position-matched null (Section 3.3.1),
 Table 5 (with S11, S12). Outputs: out/main_*.csv"""
