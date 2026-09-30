@@ -8,8 +8,6 @@ To comply with copyright restrictions regarding the original literary texts, the
 - **For Transparency:** Scripts for data preprocessing and LLM-based signal extraction (Stages 1–3) are provided to document our methodology. These scripts require high-performance computing (e.g., Solar-10.7B LLM) and the restricted raw corpus.
 - **For Replication:** We provide the **pre-computed master file** (`flash_fiction_with_surprisal_coherence_semantic.csv`), which contains the numerical signals for all analyzed stories. Users can immediately replicate the statistical analysis, trajectory clustering, and peak dynamics by running the `FlashFiction_Analysis.ipynb` notebook.
 
-All files in this repository are located at the repository root — no nested folder structure is used.
-
 ---
 
 ## 🚀 Quick Start (Analysis Only)
@@ -82,7 +80,7 @@ The master output is utilized in **`FlashFiction_Analysis.ipynb`**. This noteboo
 2. **Trajectory Clustering**: Identification of narrative archetypes and structural patterns.
 3. **Peak Dynamics**: Point-wise and dynamic recovery analysis (TTR, Slope) following narrative shocks.
 
-**Upon execution, all generated statistical reports, numerical summaries, and visualization figures are written to the repository root alongside the input files.**
+**Upon execution, all generated statistical reports, numerical summaries, and visualization figures are written to `statistical_outputs/`.**
 
 ### **[Phase 3] Robustness Checks (Executable)**
 *Standalone scripts that re-load the clustered master file and produce supplementary diagnostics.*
@@ -101,7 +99,7 @@ python story_level_sensitivity.py
 The cross-tabulation of archetype and translation status (Supplementary Table S1d) is produced by `analysis/01_main_analysis.py`.
 
 ### **[Phase 4] Reported statistics and sensitivity analyses (Executable)**
-*The numbers reported in the manuscript and its Supplementary Material are produced by the scripts in `analysis/`.*
+*The tables and statistics listed in `analysis/README.md` are produced by the scripts in `analysis/`.*
 
 * **Input:** `flash_fiction_with_surprisal_coherence_semantic.csv` and the numerical files in `analysis/data/`
 * See `analysis/README.md` for the correspondence between tables and scripts.

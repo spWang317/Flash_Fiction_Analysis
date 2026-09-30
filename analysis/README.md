@@ -1,6 +1,6 @@
 # Analysis scripts
 
-These scripts produce the numbers reported in the manuscript and its Supplementary Material.
+These scripts produce the tables and statistics listed below.
 They use numerical signals only. The story texts are under copyright and are not distributed.
 
 ## How to run
@@ -8,7 +8,7 @@ They use numerical signals only. The story texts are under copyright and are not
 Place this folder next to `flash_fiction_with_surprisal_coherence_semantic.csv` (the repository root), then:
 
 ```bash
-pip install -r requirements.txt
+pip install -r analysis/requirements.txt
 cd analysis
 python 01_main_analysis.py
 python 02_sensitivity.py

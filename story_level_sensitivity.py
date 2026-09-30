@@ -218,15 +218,6 @@ for r in results:
         f"{sig_match_str:<6}"
     )
 lines.append("")
-lines.append("Notes:")
-lines.append("  - Sign direction matches Table 4 in every cell.")
-lines.append("  - Significance pattern matches Table 4 in every cell, including")
-lines.append("    the non-significant coherence deviation in Archetype 4.")
-lines.append("  - Story-level p-values are larger than peak-level (smaller N reduces")
-lines.append("    power) but do not change any qualitative conclusion.")
-lines.append("  - This indicates that the reported findings are not artefacts of")
-lines.append("    treating successive within-story peaks as independent observations.")
-lines.append("")
 
 report = "\n".join(lines)
 with open(OUT_REPORT, "w", encoding="utf-8") as f:
